@@ -2,6 +2,10 @@
 
 Uma calculadora simples e pratica capaz de balancear reações quimicas e ajustar proporções da mesma.
 
+## Endereço de Deploy - GitHub Pages
+
+[https://faboborgeslima.github.io/calculadora-de-substancias-quimicas/](https://faboborgeslima.github.io/calculadora-de-substancias-quimicas/)
+
 ## Protótipo
 
 [https://www.figma.com/file/CMiFIumLW5FlHEdHEhIIwl/projeto_1_web_2?type=design&node-id=9-2&mode=design&t=XNYwMH4Ne4YuhjzT-0](https://www.figma.com/file/CMiFIumLW5FlHEdHEhIIwl/projeto_1_web_2?type=design&node-id=9-2&mode=design&t=XNYwMH4Ne4YuhjzT-0)
