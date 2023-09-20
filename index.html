@@ -12,39 +12,41 @@
     <title>MotionMol</title>
 </head>
 <body>
-    <header class="container-fluid bg-primary p-3 sticky-top">
-        <div class="container d-flex justify-content-between flex-column flex-sm-row gap-3">
-            <div class="d-flex flex-column flex-sm-row gap-3">
-                <img src="icons/chemistry-flask-svgrepo-com.svg" class="main-icon m-auto">
-                <h1 class="text-white fw-bold text-center m-auto">MotionMol</h1>
+    <div class="d-flex flex-column justify-content-between vh-100">
+        <header class="container-fluid bg-primary p-3 sticky-top">
+            <div class="container d-flex justify-content-between flex-column flex-sm-row gap-3">
+                <div class="d-flex flex-column flex-sm-row gap-3">
+                    <img src="icons/chemistry-flask-svgrepo-com.svg" class="main-icon m-auto">
+                    <h1 class="text-white fw-bold text-center m-auto">MotionMol</h1>
+                </div>
+                <div class="input-group input-group-lg w-100-s-25 search-bar mt-auto mb-auto">
+                    <input 
+                        class="form-control rounded-start-pill text-center"
+                        placeholder="Pesquise Aqui"
+                    >
+                    <span class="input-group-text rounded-end-pill bg-secondary">
+                        <span class="bi bi-search"></span>
+                    </span>
+                </div>
+            </div> 
+        </header>
+        <main class="container pt-4 pb-4 h-100">
+            <div class="home-grid">
+                <section class="bg-secondary rounded rounded-4 p-3">
+                    <h3 class="fw-bold mb-3">teste</h2>
+                    <p class="text-primary">teste 2</p>
+                </section>
+                <section class="bg-secondary rounded rounded-4 p-3">
+                    <h3 class="fw-bold mb-3">teste</h2>
+                    <p class="text-primary">teste 2</p>
+                </section>
             </div>
-            <div class="input-group input-group-lg w-100-s-25 search-bar mt-auto mb-auto">
-                <input 
-                    class="form-control rounded-start-pill text-center"
-                    placeholder="Pesquise Aqui"
-                >
-                <span class="input-group-text rounded-end-pill bg-secondary">
-                    <span class="bi bi-search"></span>
-                </span>
+        </main>
+        <footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
+            <div class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
+                <button class="btn btn-secondary btn-lg">Adicionar Reação +</button>
             </div>
-        </div> 
-    </header>
-    <main class="container pt-4 pb-4">
-        <div class="home-grid">
-            <section class="bg-secondary rounded rounded-4 p-3">
-                <h3 class="fw-bold mb-3">teste</h2>
-                <p class="text-primary">teste 2</p>
-            </section>
-            <section class="bg-secondary rounded rounded-4 p-3">
-                <h3 class="fw-bold mb-3">teste</h2>
-                <p class="text-primary">teste 2</p>
-            </section>
-        </div>
-    </main>
-    <footer class="container-fluid bg-primary p-3 sticky-bottom">
-        <div class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
-            <button class="btn btn-secondary btn-lg">Adicionar Reação +</button>
-        </div>
-    </footer>
+        </footer>
+    </div>
 </body>
 </html>
