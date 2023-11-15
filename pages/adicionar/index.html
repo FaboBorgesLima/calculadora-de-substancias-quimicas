@@ -21,7 +21,7 @@
                 <div class="d-sm-none"></div>
             </div>
         </header>
-        <main class="h-100 p-4">
+        <main class="p-4 bg-body">
             <form class="container bg-secondary p-4 rounded-4 shadow-sm">
                 <!-- title -->
                 <div class="input-group input-group search-bar mb-4 rounded-3 shadow-sm">
@@ -67,7 +67,7 @@
                         </div>
 
                         <button class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none">+ Reagente</button>
-                    </div>
+                    </div>  
 
                     <!-- products -->
 
@@ -76,19 +76,10 @@
                             <input 
                                 class="form-control text-center border-0"
                                 placeholder="Produto"
+                                pattern="[A-Za-z0-9()]+"
                             >
                             <button class="input-group-text bg-body border-0">
                                 <span class="bi bi-x text-danger fs-2 lh-1 text-white"></span>
-                            </button>
-                        </div>
-
-                        <div class="input-group input-group search-bar mb-4 rounded-3 shadow-sm">
-                            <input 
-                                class="form-control text-center border-0"
-                                placeholder="Produto"
-                            >
-                            <button class="input-group-text bg-body border-0">
-                                <span class="bi bi-x text-danger fs-2 lh-1"></span>
                             </button>
                         </div>
 
@@ -111,7 +102,7 @@
         </main>
         <footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
             <div class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
-                <a class="btn btn-secondary btn-lg" href="../balancear/index.html">Registrar e Balancear</a>
+                <a class="btn btn-secondary btn-lg" href="../balancear/index.html">Registrar</a>
             </div>
         </footer>
     </div>
