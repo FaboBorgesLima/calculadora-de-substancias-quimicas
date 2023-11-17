@@ -29,6 +29,14 @@ html {
 .w-100-s-25 {
     width: 100%;
 }
+input::-webkit-outer-spin-button.remove-arrows,
+input::-webkit-inner-spin-button.remove-arrows
+{
+    -webkit-appearance: none;
+}
+input[type=number].remove-arrows{
+    -moz-appearance: textfield;
+}
 @media screen and ( min-width: 576px) {
     .w-100-s-25 {
         width: 100%;
