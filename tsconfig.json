@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "target": "ES5",
+      "module": "CommonJS",
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "outDir": "./app/service/"
+    },
+    "files": ["./src/typescript/chem/index.ts"]
+  }

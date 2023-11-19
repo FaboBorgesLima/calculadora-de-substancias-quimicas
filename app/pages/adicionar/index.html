@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/x-icon" href="../../../favicon.svg" />
+		<link rel="stylesheet" href="../style.css" />
+		<link rel="stylesheet" href="../custom.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Ubuntu&display=swap"
+			rel="stylesheet" />
+		<script
+			src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+			defer></script>
+		<title>MotionMol</title>
+	</head>
+	<body>
+		<div class="d-flex flex-column justify-content-between vh-100">
+			<header class="container-fluid bg-primary p-3">
+				<div
+					class="container d-flex justify-content-between justify-content-sm-center align-items-center">
+					<a
+						class="bi bi-caret-left-fill d-sm-none text-white fs-1"
+						href="../index.html"></a>
+					<img src="../../../favicon.svg" class="main-icon" />
+					<div class="d-sm-none"></div>
+				</div>
+			</header>
+			<main class="p-4 bg-body">
+				<form class="container bg-secondary p-4 rounded-4 shadow-sm">
+					<!-- title -->
+					<div
+						class="input-group input-group search-bar mb-4 rounded-3 shadow-sm p-0">
+						<input
+							class="form-control text-center border-0"
+							placeholder="Titulo da Reação" />
+					</div>
+					<div class="row">
+						<!-- reagent -->
+
+						<div class="col-12 col-md-6">
+							<div class="row mb-4 g-0 justify-content-between">
+								<div class="input-group p-0 rounded shadow-sm col-8">
+									<input
+										class="form-control"
+										placeholder="Reagente"
+										pattern="[A-Za-z0-9()]+" />
+									<button
+										class="btn bg-body shadow-none border-start-0 border-light-subtle">
+										<span class="bi bi-x text-dark fs-2 lh-1"></span>
+									</button>
+								</div>
+								<div class="col-3">
+									<input
+										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm"
+										type="number"
+										placeholder="mols" />
+								</div>
+							</div>
+
+							<div class="row mb-4 g-0 justify-content-between">
+								<div class="input-group p-0 rounded shadow-sm col-8">
+									<input
+										class="form-control"
+										placeholder="Reagente"
+										pattern="[A-Za-z0-9()]+" />
+									<button
+										class="btn bg-body shadow-none border-start-0 border-light-subtle">
+										<span class="bi bi-x text-danger fs-2 lh-1"></span>
+									</button>
+								</div>
+								<div class="col-3">
+									<input
+										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm"
+										type="number"
+										placeholder="mols" />
+								</div>
+							</div>
+
+							<button
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none">
+								+ Reagente
+							</button>
+						</div>
+
+						<!-- products -->
+
+						<div class="col-12 col-md-6">
+							<div class="row mb-4 g-0 justify-content-between">
+								<div class="input-group p-0 rounded shadow-sm col-8">
+									<input
+										class="form-control"
+										placeholder="Reagente"
+										pattern="[A-Za-z0-9()]+" />
+									<button
+										class="btn bg-body shadow-none border-start-0 border-light-subtle">
+										<span class="bi bi-x text-dark fs-2 lh-1"></span>
+									</button>
+								</div>
+								<div class="col-3">
+									<input
+										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm"
+										type="number"
+										placeholder="mols" />
+								</div>
+							</div>
+
+							<button
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none">
+								+ Produto
+							</button>
+						</div>
+					</div>
+
+					<div class="row">
+						<!-- + reagent -->
+						<div class="col-12 col-md-6">
+							<button
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-none d-md-block">
+								+ Reagente
+							</button>
+						</div>
+						<!-- + product -->
+						<div class="col-12 col-md-6">
+							<button
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-none d-md-block">
+								+ Produto
+							</button>
+						</div>
+					</div>
+				</form>
+			</main>
+			<footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
+				<div
+					class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
+					<a class="btn btn-secondary btn-lg" href="../balancear/index.html"
+						>Registrar</a
+					>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
