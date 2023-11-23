@@ -1,6 +1,4 @@
-import { ChemMolecule } from './chemMolecule';
-import { ChemElement } from "./chemElement";
-import { ChemReaction } from './chemReaction';
+import { ChemReaction, ChemMolecule, ChemElement } from './index';
 
 const atomTestList: AtomTestI[] = [
         { name:"C", quant: 2, expectedMass: 24, expectedResponse: true },
@@ -13,6 +11,7 @@ const atomTestList: AtomTestI[] = [
         { condensed:"CO2", expectedMass:(12+(16)), expectedResponse:false },
         { condensed:"CH3(CH2)3CH3", expectedMass:(72), expectedResponse:true },
         { condensed:"CH3(CH2)3CH3", expectedMass:(71), expectedResponse:false },
+        { condensed:"NaCl", expectedMass:(58.44), expectedResponse:true },
     ],
     reactionTestList: RectionTestI[] = [
         { 
@@ -86,7 +85,13 @@ function moleculeTest( data: MoleculeTestI ):string {
     "\n\t expected response: " + data.expectedResponse +
     "\n\t mass: " + molecule1.getTotalMass();
 
-    if ( ( molecule1.getTotalMass() == data.expectedMass ) == data.expectedResponse )
+    const totalMass = molecule1.getTotalMass(), 
+        lowerMass = Math.min( totalMass, data.expectedMass),
+        biggerMass = Math.max( totalMass, data.expectedMass),
+        lowerTolerance = lowerMass * 0.99,
+        upperTolerance = lowerMass * 1.01;
+
+    if ( ( (biggerMass > lowerTolerance) && (biggerMass < upperTolerance) ) == data.expectedResponse )
         return "OK " + ( SHOW_OKAY_TESTS ? params : "");
 
     console.debug( molecule1.getElements() );

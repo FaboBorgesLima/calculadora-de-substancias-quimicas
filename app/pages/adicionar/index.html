@@ -17,6 +17,8 @@
 		<script
 			src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"
 			defer></script>
+		<script src="./main.js" type="module"></script>
+		<script src="../../service/index.js" defer type="module"></script>
 		<title>MotionMol</title>
 	</head>
 	<body>
@@ -38,6 +40,7 @@
 						class="input-group input-group search-bar mb-4 rounded-3 shadow-sm p-0">
 						<input
 							class="form-control text-center border-0"
+							id="reaction-title"
 							placeholder="Titulo da Reação" />
 					</div>
 					<div class="row">
@@ -47,9 +50,9 @@
 							<div class="row mb-4 g-0 justify-content-between">
 								<div class="input-group p-0 rounded shadow-sm col-8">
 									<input
-										class="form-control"
+										class="form-control reagent"
 										placeholder="Reagente"
-										pattern="[A-Za-z0-9()]+" />
+										pattern="[A-Za-z0-9\(\)]{1,}" />
 									<button
 										class="btn bg-body shadow-none border-start-0 border-light-subtle">
 										<span class="bi bi-x text-dark fs-2 lh-1"></span>
@@ -57,8 +60,10 @@
 								</div>
 								<div class="col-3">
 									<input
-										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm"
+										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm reagent-quant"
 										type="number"
+										step="0.1"
+										pattern="[0-9]+([\.,][0-9]+)?"
 										placeholder="mols" />
 								</div>
 							</div>
@@ -66,9 +71,9 @@
 							<div class="row mb-4 g-0 justify-content-between">
 								<div class="input-group p-0 rounded shadow-sm col-8">
 									<input
-										class="form-control"
+										class="form-control reagent"
 										placeholder="Reagente"
-										pattern="[A-Za-z0-9()]+" />
+										pattern="[A-Za-z0-9\(\)]{1,}" />
 									<button
 										class="btn bg-body shadow-none border-start-0 border-light-subtle">
 										<span class="bi bi-x text-danger fs-2 lh-1"></span>
@@ -76,8 +81,10 @@
 								</div>
 								<div class="col-3">
 									<input
-										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm"
+										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm reagent-quant"
 										type="number"
+										step="0.1"
+										pattern="[0-9]+([\.,][0-9]+)?"
 										placeholder="mols" />
 								</div>
 							</div>
@@ -94,9 +101,9 @@
 							<div class="row mb-4 g-0 justify-content-between">
 								<div class="input-group p-0 rounded shadow-sm col-8">
 									<input
-										class="form-control"
-										placeholder="Reagente"
-										pattern="[A-Za-z0-9()]+" />
+										class="form-control product"
+										placeholder="Product"
+										pattern="[A-Za-z0-9\(\)]{1,}" />
 									<button
 										class="btn bg-body shadow-none border-start-0 border-light-subtle">
 										<span class="bi bi-x text-dark fs-2 lh-1"></span>
@@ -104,8 +111,10 @@
 								</div>
 								<div class="col-3">
 									<input
-										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm"
+										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm product-quant"
 										type="number"
+										step="0.1"
+										pattern="[0-9]+([\.,][0-9]+)?"
 										placeholder="mols" />
 								</div>
 							</div>
@@ -138,9 +147,7 @@
 			<footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
 				<div
 					class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
-					<a class="btn btn-secondary btn-lg" href="../balancear/index.html"
-						>Registrar</a
-					>
+					<a class="btn btn-secondary btn-lg" id="add">Registrar</a>
 				</div>
 			</footer>
 		</div>

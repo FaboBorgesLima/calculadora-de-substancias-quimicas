@@ -1,10 +1,13 @@
 {
     "compilerOptions": {
-      "target": "ES5",
-      "module": "CommonJS",
+      "target": "ES6",
       "sourceMap": true,
-      "noImplicitAny": true,
-      "outDir": "./app/service/"
+      "outDir": "app/service",
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "allowUnreachableCode": false,
+      "allowUnusedLabels": false,
+      "declaration": true
     },
-    "files": ["./src/typescript/chem/index.ts"]
+    "files": ["src/typescript/chem/index.ts"]
   }
