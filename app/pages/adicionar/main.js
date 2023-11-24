@@ -1,11 +1,11 @@
 //@ts-check
 import { ChemMolecule, ChemReaction } from "../../service/index.js";
+
 /**
- * @returns {[ChemMolecule[],ChemMolecule[],boolean]}
+ * @returns {[HTMLCollectionOf<HTMLInputElement>,HTMLCollectionOf<HTMLInputElement>,HTMLCollectionOf<HTMLInputElement>,HTMLCollectionOf<HTMLInputElement>] | undefined}
  */
-function verifyAllChemicals() {
-	const reagents = [],
-		reagentsHTMLElements =
+function getReagentsQuantProductsQuantHTML() {
+	const reagentsHTMLElements =
 			/** @type {HTMLCollectionOf<HTMLInputElement> | null} */ (
 				document.getElementsByClassName("reagent")
 			),
@@ -13,7 +13,6 @@ function verifyAllChemicals() {
 			/** @type {HTMLCollectionOf<HTMLInputElement> | null} */ (
 				document.getElementsByClassName("reagent-quant")
 			),
-		products = [],
 		productsHTMLElements =
 			/** @type {HTMLCollectionOf<HTMLInputElement> | null} */ (
 				document.getElementsByClassName("product")
@@ -35,7 +34,7 @@ function verifyAllChemicals() {
 			"No HTML inputs for products,products-quant,reagents and reagents-quant"
 		);
 
-		return [reagents, products, false];
+		return;
 	}
 
 	if (
@@ -44,8 +43,34 @@ function verifyAllChemicals() {
 	) {
 		console.error("Reagents or products dont have enough quant elements");
 
-		return [reagents, products, false];
+		return;
 	}
+
+	return [
+		reagentsHTMLElements,
+		reagentsQuantHTMLElements,
+		productsHTMLElements,
+		productsQuantHTMLElements,
+	];
+}
+
+/**
+ * @returns {[ChemMolecule[],ChemMolecule[],boolean]}
+ */
+function getAndValidateChem() {
+	const reagents = [],
+		products = [];
+
+	const tryGetElements = getReagentsQuantProductsQuantHTML();
+
+	if (!tryGetElements) return [reagents, products, false];
+
+	const [
+		reagentsHTMLElements,
+		reagentsQuantHTMLElements,
+		productsHTMLElements,
+		productsQuantHTMLElements,
+	] = tryGetElements;
 
 	for (let i = 0; i < reagentsHTMLElements.length; i++) {
 		const newReagent = new ChemMolecule();
@@ -90,13 +115,11 @@ function verifyAllChemicals() {
 const addButton = document.getElementById("add");
 
 addButton?.addEventListener("click", () => {
-	const [reagents, products, allIsFine] = verifyAllChemicals();
-
-	if (!allIsFine) return;
-
 	const reactionTitleHTMLElement = /** @type {HTMLInputElement | null} */ (
-		document.getElementById("reaction-title")
-	);
+			document.getElementById("reaction-title")
+		),
+		modalHTMLElement = document.getElementById("modal"),
+		modalHTMLText = document.getElementById("modal-text");
 
 	if (!reactionTitleHTMLElement) {
 		console.error("Title not found");
@@ -104,8 +127,35 @@ addButton?.addEventListener("click", () => {
 		return;
 	}
 
+	if (!modalHTMLText) {
+		console.error("Modal text not found");
+
+		return;
+	}
+
+	if (!modalHTMLElement) {
+		console.error("Modal not found");
+
+		return;
+	}
+
+	// @ts-ignore
+	const modal = new bootstrap.Modal(modalHTMLElement);
+
 	if (reactionTitleHTMLElement.value.length < 3) {
-		console.error("Title not long enough");
+		modalHTMLText.textContent = "Titulo deve conter no minimo 3 elementos!";
+
+		modal.show();
+
+		return;
+	}
+
+	const [reagents, products, chemAreValid] = getAndValidateChem();
+
+	if (!chemAreValid) {
+		modalHTMLText.textContent = "Quimicos inválidos!";
+
+		modal.show();
 
 		return;
 	}
@@ -116,5 +166,11 @@ addButton?.addEventListener("click", () => {
 
 	reaction.setRightSide(products);
 
-	console.log(reaction.isBalanced());
+	if (!reaction.isBalanced()) {
+		modalHTMLText.textContent = "Formulas não balancedas!";
+
+		modal.show();
+
+		return;
+	}
 });
