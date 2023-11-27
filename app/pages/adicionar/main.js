@@ -1,6 +1,116 @@
 //@ts-check
 import { ChemMolecule, ChemReaction } from "../../service/index.js";
 
+const addButton = document.getElementById("add");
+
+addButton?.addEventListener("click", () => {
+	const reactionTitleHTMLElement = /** @type {HTMLInputElement | null} */ (
+		document.getElementById("reaction-title")
+	);
+	const documentsById = getAndValidateElementsByid([
+		"modal-error",
+		"modal-error-text",
+		"modal-okay",
+		"modal-okay-text",
+	]);
+
+	if (typeof documentsById == "string") {
+		console.error(documentsById);
+
+		return;
+	}
+
+	const [
+		modalErrorHTMLElement,
+		modalErrorHTMLText,
+		modalOkayHTMLElement,
+		modalOkayHTMLText,
+	] = documentsById;
+
+	if (!reactionTitleHTMLElement) return;
+
+	// @ts-ignore
+	const modalError = new bootstrap.Modal(modalErrorHTMLElement),
+		// @ts-ignore
+		modalOkay = new bootstrap.Modal(modalOkayHTMLElement);
+
+	if (reactionTitleHTMLElement.value.length < 3) {
+		modalErrorHTMLText.textContent = "Titulo deve conter no minimo letras!";
+
+		modalError.show();
+
+		return;
+	}
+
+	const [reagents, products, chemAreValid] = getAndValidateChem();
+
+	if (!chemAreValid) {
+		modalErrorHTMLText.textContent = "Quimicos inválidos!";
+
+		modalError.show();
+
+		return;
+	}
+
+	const reaction = new ChemReaction(reactionTitleHTMLElement.value);
+
+	const reactionId = sessionStorage.getItem("reaction-id");
+
+	if (reactionId != null) reaction.id = parseInt(reactionId);
+
+	reaction.setLeftSide(reagents);
+
+	reaction.setRightSide(products);
+
+	if (!reaction.isBalanced()) {
+		modalErrorHTMLText.textContent = "Formulas não balancedas!";
+
+		modalError.show();
+
+		return;
+	}
+
+	reaction.storageReaction();
+
+	const reactionLeftFormulas = [],
+		reactionRightFormulas = [];
+
+	for (let i = 0; i < reagents.length; i++)
+		reactionLeftFormulas.push(reagents[i].getCondesedFormula());
+
+	for (let i = 0; i < products.length; i++)
+		reactionRightFormulas.push(products[i].getCondesedFormula());
+
+	modalOkayHTMLText.textContent = `A sua reação é :${reactionLeftFormulas.join(
+		"+"
+	)}-> ${reactionRightFormulas.join("+")}`;
+
+	sessionStorage.clear();
+
+	sessionStorage.setItem("reaction-id", reaction.id.toString());
+
+	modalOkay.show();
+});
+
+/**
+ *
+ * @param {string[]} ids
+ * @returns {string | HTMLElement[]}
+ */
+function getAndValidateElementsByid(ids) {
+	const validatedElements = /**@type {HTMLElement[]} */ ([]);
+
+	for (let i = 0; i < ids.length; i++) {
+		const newElement = document.getElementById(ids[i]);
+
+		if (!newElement) return ids[i];
+
+		validatedElements.push(newElement);
+	}
+
+	return validatedElements;
+}
+
 /**
  * @returns {[HTMLCollectionOf<HTMLInputElement>,HTMLCollectionOf<HTMLInputElement>,HTMLCollectionOf<HTMLInputElement>,HTMLCollectionOf<HTMLInputElement>] | undefined}
  */
@@ -111,66 +221,3 @@ function getAndValidateChem() {
 
 	return [reagents, products, true];
 }
-
-const addButton = document.getElementById("add");
-
-addButton?.addEventListener("click", () => {
-	const reactionTitleHTMLElement = /** @type {HTMLInputElement | null} */ (
-			document.getElementById("reaction-title")
-		),
-		modalHTMLElement = document.getElementById("modal"),
-		modalHTMLText = document.getElementById("modal-text");
-
-	if (!reactionTitleHTMLElement) {
-		console.error("Title not found");
-
-		return;
-	}
-
-	if (!modalHTMLText) {
-		console.error("Modal text not found");
-
-		return;
-	}
-
-	if (!modalHTMLElement) {
-		console.error("Modal not found");
-
-		return;
-	}
-
-	// @ts-ignore
-	const modal = new bootstrap.Modal(modalHTMLElement);
-
-	if (reactionTitleHTMLElement.value.length < 3) {
-		modalHTMLText.textContent = "Titulo deve conter no minimo 3 elementos!";
-
-		modal.show();
-
-		return;
-	}
-
-	const [reagents, products, chemAreValid] = getAndValidateChem();
-
-	if (!chemAreValid) {
-		modalHTMLText.textContent = "Quimicos inválidos!";
-
-		modal.show();
-
-		return;
-	}
-
-	const reaction = new ChemReaction(reactionTitleHTMLElement.value);
-
-	reaction.setLeftSide(reagents);
-
-	reaction.setRightSide(products);
-
-	if (!reaction.isBalanced()) {
-		modalHTMLText.textContent = "Formulas não balancedas!";
-
-		modal.show();
-
-		return;
-	}
-});

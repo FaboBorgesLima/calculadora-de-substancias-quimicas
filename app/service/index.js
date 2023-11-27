@@ -9,30 +9,54 @@ export class ChemElement {
         quant = quant > 0 ? quant : 1;
         this.atomsMols = quant;
     }
+    static loadFromJSON(data) {
+        if (!(data.nAtomic && data.mass && data.atomsMols))
+            return new ChemElement(1, 1, 1);
+        return new ChemElement(data.nAtomic, data.mass, data.atomsMols);
+    }
     getNAtomic() {
         return this.nAtomic;
     }
     static factory(element, quant) {
         switch (element) {
-            case "H": return new ChemElement(1, 1, quant);
-            case "Li": return new ChemElement(3, 6.9, quant);
-            case "Na": return new ChemElement(11, 23, quant);
-            case "K": return new ChemElement(19, 39, quant);
-            case "Be": return new ChemElement(4, 9, quant);
-            case "Mg": return new ChemElement(12, 24, quant);
-            case "Ca": return new ChemElement(20, 40, quant);
-            case "B": return new ChemElement(5, 10.8, quant);
-            case "Al": return new ChemElement(13, 26.98, quant);
-            case "C": return new ChemElement(6, 12, quant);
-            case "Si": return new ChemElement(14, 28.08, quant);
-            case "N": return new ChemElement(7, 14, quant);
-            case "P": return new ChemElement(15, 30.9, quant);
-            case "O": return new ChemElement(8, 16, quant);
-            case "S": return new ChemElement(16, 32, quant);
-            case "F": return new ChemElement(9, 19, quant);
-            case "Cl": return new ChemElement(17, 35.5, quant);
-            case "Br": return new ChemElement(35, 79.9, quant);
-            case "I": return new ChemElement(53, 126.9, quant);
+            case "H":
+                return new ChemElement(1, 1, quant);
+            case "Li":
+                return new ChemElement(3, 6.9, quant);
+            case "Na":
+                return new ChemElement(11, 23, quant);
+            case "K":
+                return new ChemElement(19, 39, quant);
+            case "Be":
+                return new ChemElement(4, 9, quant);
+            case "Mg":
+                return new ChemElement(12, 24, quant);
+            case "Ca":
+                return new ChemElement(20, 40, quant);
+            case "B":
+                return new ChemElement(5, 10.8, quant);
+            case "Al":
+                return new ChemElement(13, 26.98, quant);
+            case "C":
+                return new ChemElement(6, 12, quant);
+            case "Si":
+                return new ChemElement(14, 28.08, quant);
+            case "N":
+                return new ChemElement(7, 14, quant);
+            case "P":
+                return new ChemElement(15, 30.9, quant);
+            case "O":
+                return new ChemElement(8, 16, quant);
+            case "S":
+                return new ChemElement(16, 32, quant);
+            case "F":
+                return new ChemElement(9, 19, quant);
+            case "Cl":
+                return new ChemElement(17, 35.5, quant);
+            case "Br":
+                return new ChemElement(35, 79.9, quant);
+            case "I":
+                return new ChemElement(53, 126.9, quant);
         }
         return new ChemElement(1, 1, quant);
     }
@@ -56,6 +80,14 @@ export class ChemMolecule {
     getElements() {
         return this.elements;
     }
+    static loadFromJSON(data) {
+        const molecule = new ChemMolecule();
+        for (let i = 0; i < data.elements.length; i++)
+            molecule.elements[i] = ChemElement.loadFromJSON(data.elements[i]);
+        molecule.condensedFormula = data.condensedFormula;
+        molecule.mols = data.mols;
+        return molecule;
+    }
     getTotalElements() {
         let totalElements = this.clone();
         totalElements = totalElements.mult(totalElements.mols);
@@ -73,12 +105,13 @@ export class ChemMolecule {
         const mainMolecule = this.clone().getTotalElements(), secondaryMolecule = another.clone().getTotalElements();
         const initialSecondaryLength = secondaryMolecule.elements.length;
         for (let i = 0; i < initialSecondaryLength; i++) {
-            const indexOfObject = mainMolecule.elements.findIndex(el => el.getNAtomic() == secondaryMolecule.elements[i].getNAtomic());
+            const indexOfObject = mainMolecule.elements.findIndex((el) => el.getNAtomic() == secondaryMolecule.elements[i].getNAtomic());
             if (indexOfObject < 0) {
                 mainMolecule.elements.push(secondaryMolecule.elements[i]);
                 continue;
             }
-            mainMolecule.elements[indexOfObject].atomsMols += secondaryMolecule.elements[i].atomsMols;
+            mainMolecule.elements[indexOfObject].atomsMols +=
+                secondaryMolecule.elements[i].atomsMols;
         }
         return mainMolecule;
     }
@@ -103,11 +136,12 @@ export class ChemMolecule {
         if (!elementsList)
             return false;
         this.condensedFormula = condensedFormula;
-        this.elements = StringToMoleculeConversor.turnStringArrayToElementArray(elementsList);
+        this.elements =
+            StringToMoleculeConversor.turnStringArrayToElementArray(elementsList);
         return true;
     }
     clone() {
-        const clone = new ChemMolecule;
+        const clone = new ChemMolecule();
         clone.condensedFormula = this.condensedFormula;
         for (let i = 0; i < this.elements.length; i++)
             clone.elements[i] = this.elements[i].clone();
@@ -140,7 +174,7 @@ class StringToMoleculeConversor {
             times: 1,
             parenthesisList: parenthesisList,
             parenthesisMult: parenthesisMult,
-            chemList: newElementArray
+            chemList: newElementArray,
         };
         while (elementsList.length > 0) {
             const el = elementsList.pop();
@@ -167,11 +201,11 @@ class StringToMoleculeConversor {
     }
     static switchBetweenConversionOptions(data) {
         switch (data.param) {
-            case ("("):
+            case "(":
                 data.parenthesisList.pop();
                 data.parenthesisMult = this.multiplyValuesOfArray(data.parenthesisList);
                 return data;
-            case (")"):
+            case ")":
                 data.parenthesisList.push(data.times);
                 data.parenthesisMult = this.multiplyValuesOfArray(data.parenthesisList);
                 return data;
@@ -191,6 +225,7 @@ export class ChemReaction {
         this.leftSide = [];
         this.rightSide = [];
         this.name = "";
+        this.id = 0;
         this.name = name;
     }
     setLeftSide(molecules) {
@@ -218,12 +253,49 @@ export class ChemReaction {
         return sumLeftSide.isEqual(sumRightSide);
     }
     sumMolecules(molecules) {
-        let sum = new ChemMolecule;
+        let sum = new ChemMolecule();
         for (let i = 0; i < molecules.length; i++)
             sum = sum.sum(molecules[i]);
         return sum;
     }
-    setMolsOnMolecule(index, quant) {
+    static loadReactionId(id) {
+        const tryGetItem = JSON.parse(localStorage.getItem(id.toString()));
+        if (!tryGetItem)
+            return;
+        const reaction = new ChemReaction(tryGetItem.name);
+        reaction.id = tryGetItem.id;
+        for (let i = 0; i < tryGetItem.leftSide.length; i++)
+            reaction.leftSide[i] = ChemMolecule.loadFromJSON(tryGetItem.leftSide[i]);
+        for (let i = 0; i < tryGetItem.rightSide.length; i++)
+            reaction.rightSide[i] = ChemMolecule.loadFromJSON(tryGetItem.rightSide[i]);
+        return reaction;
+    }
+    static loadReactionPos(index) {
+        if (index >= localStorage.length)
+            return;
+        const tryGetItem = JSON.parse(localStorage.key(index));
+        if (!tryGetItem)
+            return;
+        const reaction = new ChemReaction(tryGetItem.name);
+        reaction.id = tryGetItem.id;
+        for (let i = 0; i < tryGetItem.leftSide.length; i++)
+            reaction.leftSide[i] = ChemMolecule.loadFromJSON(tryGetItem.leftSide[i]);
+        for (let i = 0; i < tryGetItem.rightSide.length; i++)
+            reaction.rightSide[i] = ChemMolecule.loadFromJSON(tryGetItem.rightSide[i]);
+        return reaction;
+    }
+    storageReaction() {
+        if (!this.isBalanced())
+            return false;
+        if (!this.id) {
+            const lastID = localStorage.key(localStorage.length - 1);
+            let idAsInt = parseInt(lastID);
+            if (isNaN(idAsInt))
+                idAsInt = 0;
+            this.id = idAsInt + 1;
+        }
+        localStorage.setItem(this.id.toString(), JSON.stringify(this));
+        return true;
     }
     mult(num) {
         const mult = this.clone();

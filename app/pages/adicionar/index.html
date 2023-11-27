@@ -33,6 +33,7 @@
 					<div class="d-sm-none"></div>
 				</div>
 			</header>
+			<span id="reaction-id" class="visually-hidden"></span>
 			<main class="p-4 bg-body">
 				<form class="container bg-secondary p-4 rounded-4 shadow-sm">
 					<!-- title -->
@@ -144,10 +145,10 @@
 					</div>
 				</form>
 
-				<!--modal-->
+				<!--modal error-->
 				<div
 					class="modal fade"
-					id="modal"
+					id="modal-error"
 					data-bs-backdrop="static"
 					data-bs-keyboard="false"
 					tabindex="-1"
@@ -163,7 +164,7 @@
 									data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
-							<div class="modal-body" id="modal-text">...</div>
+							<div class="modal-body" id="modal-error-text">Erro</div>
 							<div class="modal-footer">
 								<button
 									type="button"
@@ -175,7 +176,42 @@
 						</div>
 					</div>
 				</div>
-				<!-- end modal -->
+				<!-- end modal error -->
+				<!-- modal okay -->
+				<div
+					class="modal fade"
+					id="modal-okay"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="modal"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5">
+									Obrigado pela sua contribuição!
+								</h1>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body" id="modal-okay-text"></div>
+							<div class="modal-footer">
+								<button
+									id="btn-success"
+									type="button"
+									class="btn btn-success"
+									data-bs-dismiss="modal">
+									Continuar
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end modal okay-->
 			</main>
 			<footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
 				<div
