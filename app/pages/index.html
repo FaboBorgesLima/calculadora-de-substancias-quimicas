@@ -14,11 +14,13 @@
 		<link
 			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Ubuntu&display=swap"
 			rel="stylesheet" />
-		<script defer src="main.js"></script>
+		<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="../service/index.js" defer type="module"></script>
+		<script type="module" src="main.js"></script>
 		<title>MotionMol</title>
 	</head>
-	<body>
-		<div class="d-flex bg-body flex-column justify-content-between vh-100">
+	<body class="bg-body">
+		<div class="d-flex bg-body flex-column justify-content-between min-vh-100">
 			<header class="container-fluid bg-primary p-3 sticky-top">
 				<div
 					class="container d-flex justify-content-between flex-column flex-sm-row gap-3">
@@ -37,27 +39,14 @@
 					</nav>
 				</div>
 			</header>
-			<main class="container pt-4 pb-4">
+			<main class="container pt-4 pb-4 bg-body">
 				<div class="home-grid">
-					<section class="bg-secondary rounded rounded-4 p-3">
+					<section
+						class="reaction-card bg-secondary rounded rounded-4 p-3 d-none">
 						<div class="row">
 							<div class="col-10">
-								<h3 class="fw-bold mb-3">teste</h3>
-								<p class="text-primary">teste 2</p>
-							</div>
-							<div
-								class="col-2 d-flex align-items-center justify-content-center">
-								<button class="bg-secondary border-0">
-									<span class="bi bi-x text-danger fs-1"></span>
-								</button>
-							</div>
-						</div>
-					</section>
-					<section class="bg-secondary rounded rounded-4 p-3">
-						<div class="row">
-							<div class="col-10">
-								<h3 class="fw-bold mb-3">teste</h3>
-								<p class="text-primary">teste 2</p>
+								<h3 class="fw-bold mb-3 reaction-title"></h3>
+								<p class="text-primary reaction-description"></p>
 							</div>
 							<div
 								class="col-2 d-flex align-items-center justify-content-center">

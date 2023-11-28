@@ -46,15 +46,21 @@ export declare class ChemReaction {
     mult(num: number): ChemReaction;
     sumRightSide(): ChemMolecule;
     sumLeftSide(): ChemMolecule;
+    toString(): string;
 }
-interface ChemElementSchema {
+export interface ChemElementSchema {
     mass: number;
     nAtomic: number;
     atomsMols: number;
 }
-interface ChemMoleculeSchema {
+export interface ChemMoleculeSchema {
     elements: ChemElementSchema[];
     condensedFormula: string;
     mols: number;
 }
-export {};
+export interface ChemReactionSchema {
+    leftSide: ChemMoleculeSchema[];
+    rightSide: ChemMoleculeSchema[];
+    name: string;
+    id: number;
+}

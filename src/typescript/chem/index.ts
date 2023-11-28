@@ -280,7 +280,7 @@ class StringToMoleculeConversor {
 	private static splitStringNumber(str: string): [string, number] {
 		const onlyStr = str.replace(/[0-9]/g, "");
 
-		let onlyNumber: number = parseInt(str.replace(/[^0-9]/, ""));
+		let onlyNumber: number = parseInt(str.replace(/[^0-9]/g, ""));
 
 		onlyNumber = onlyNumber > 0 ? onlyNumber : 1;
 
@@ -415,11 +415,13 @@ export class ChemReaction {
 	static loadReactionPos(index: number): ChemReaction | undefined {
 		if (index >= localStorage.length) return;
 
-		const tryGetItem: ChemReactionSchema | undefined = JSON.parse(
-			localStorage.key(index)
-		);
+		const tryGetItemID: string | undefined = localStorage.key(index);
 
-		if (!tryGetItem) return;
+		if (!tryGetItemID) return;
+
+		const tryGetItem: ChemReactionSchema = JSON.parse(
+			localStorage.getItem(tryGetItemID)
+		);
 
 		const reaction = new ChemReaction(tryGetItem.name);
 
@@ -472,21 +474,38 @@ export class ChemReaction {
 	public sumLeftSide(): ChemMolecule {
 		return this.sumMolecules(this.leftSide);
 	}
+
+	public toString(): string {
+		let str: string = "";
+
+		for (let i: number = 0; i < this.leftSide.length - 1; i++)
+			str += this.leftSide[i].getCondesedFormula() + " + ";
+
+		str +=
+			this.leftSide[this.leftSide.length - 1].getCondesedFormula() + " -> ";
+
+		for (let i: number = 0; i < this.rightSide.length - 1; i++)
+			str += this.rightSide[i].getCondesedFormula() + " + ";
+
+		str += this.rightSide[this.rightSide.length - 1].getCondesedFormula();
+
+		return str;
+	}
 }
 
-interface ChemElementSchema {
+export interface ChemElementSchema {
 	mass: number;
 	nAtomic: number;
 	atomsMols: number;
 }
 
-interface ChemMoleculeSchema {
+export interface ChemMoleculeSchema {
 	elements: ChemElementSchema[];
 	condensedFormula: string;
 	mols: number;
 }
 
-interface ChemReactionSchema {
+export interface ChemReactionSchema {
 	leftSide: ChemMoleculeSchema[];
 	rightSide: ChemMoleculeSchema[];
 	name: string;

@@ -54,9 +54,16 @@ addButton?.addEventListener("click", () => {
 
 	const reaction = new ChemReaction(reactionTitleHTMLElement.value);
 
-	const reactionId = sessionStorage.getItem("reaction-id");
+	let reactionId = sessionStorage.getItem("reaction-id");
 
-	if (reactionId != null) reaction.id = parseInt(reactionId);
+	if (reactionId == null) {
+		const key = localStorage.key(0);
+
+		if (key) reactionId = (parseInt(key) + 1).toString();
+		else reactionId = "1";
+	}
+
+	reaction.id = parseInt(reactionId);
 
 	reaction.setLeftSide(reagents);
 

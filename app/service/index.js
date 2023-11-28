@@ -195,7 +195,7 @@ class StringToMoleculeConversor {
     }
     static splitStringNumber(str) {
         const onlyStr = str.replace(/[0-9]/g, "");
-        let onlyNumber = parseInt(str.replace(/[^0-9]/, ""));
+        let onlyNumber = parseInt(str.replace(/[^0-9]/g, ""));
         onlyNumber = onlyNumber > 0 ? onlyNumber : 1;
         return [onlyStr, onlyNumber];
     }
@@ -273,9 +273,10 @@ export class ChemReaction {
     static loadReactionPos(index) {
         if (index >= localStorage.length)
             return;
-        const tryGetItem = JSON.parse(localStorage.key(index));
-        if (!tryGetItem)
+        const tryGetItemID = localStorage.key(index);
+        if (!tryGetItemID)
             return;
+        const tryGetItem = JSON.parse(localStorage.getItem(tryGetItemID));
         const reaction = new ChemReaction(tryGetItem.name);
         reaction.id = tryGetItem.id;
         for (let i = 0; i < tryGetItem.leftSide.length; i++)
@@ -310,6 +311,17 @@ export class ChemReaction {
     }
     sumLeftSide() {
         return this.sumMolecules(this.leftSide);
+    }
+    toString() {
+        let str = "";
+        for (let i = 0; i < this.leftSide.length - 1; i++)
+            str += this.leftSide[i].getCondesedFormula() + " + ";
+        str +=
+            this.leftSide[this.leftSide.length - 1].getCondesedFormula() + " -> ";
+        for (let i = 0; i < this.rightSide.length - 1; i++)
+            str += this.rightSide[i].getCondesedFormula() + " + ";
+        str += this.rightSide[this.rightSide.length - 1].getCondesedFormula();
+        return str;
     }
 }
 //# sourceMappingURL=index.js.map
