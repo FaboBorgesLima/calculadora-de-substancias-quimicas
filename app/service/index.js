@@ -226,7 +226,18 @@ export class ChemReaction {
         this.rightSide = [];
         this.name = "";
         this.id = 0;
+        this.MAX_NAME_CHAR = 36;
+        this.MIN_NAME_CHAR = 3;
         this.name = name;
+    }
+    setName(name) {
+        if (!this.isValidName(name))
+            return false;
+        this.name = name;
+        return true;
+    }
+    isValidName(name) {
+        return (name.length >= this.MIN_NAME_CHAR || name.length <= this.MAX_NAME_CHAR);
     }
     setLeftSide(molecules) {
         this.leftSide = molecules;
@@ -276,14 +287,47 @@ export class ChemReaction {
         const tryGetItemID = localStorage.key(index);
         if (!tryGetItemID)
             return;
-        const tryGetItem = JSON.parse(localStorage.getItem(tryGetItemID));
-        const reaction = new ChemReaction(tryGetItem.name);
-        reaction.id = tryGetItem.id;
-        for (let i = 0; i < tryGetItem.leftSide.length; i++)
-            reaction.leftSide[i] = ChemMolecule.loadFromJSON(tryGetItem.leftSide[i]);
-        for (let i = 0; i < tryGetItem.rightSide.length; i++)
-            reaction.rightSide[i] = ChemMolecule.loadFromJSON(tryGetItem.rightSide[i]);
-        return reaction;
+        return ChemReaction.loadReactionId(parseInt(tryGetItemID));
+    }
+    static quickLoadFromPos(index) {
+        if (index >= localStorage.length)
+            return;
+        const tryGetItemID = localStorage.key(index);
+        if (!tryGetItemID)
+            return;
+        return ChemReaction.quickLoadFromId(parseInt(tryGetItemID));
+    }
+    static quickLoadFromId(id) {
+        const tryGetItem = localStorage.getItem(id.toString());
+        if (!tryGetItem)
+            return;
+        const parseJson = JSON.parse(tryGetItem);
+        return parseJson;
+    }
+    static schemaToString(schema) {
+        let reaction = "", name = schema.name;
+        for (let i = 0; i < schema.leftSide.length - 1; i++)
+            reaction +=
+                schema.leftSide[i].mols +
+                    " " +
+                    schema.leftSide[i].condensedFormula +
+                    " + ";
+        reaction +=
+            schema.leftSide[schema.leftSide.length - 1].mols +
+                " " +
+                schema.leftSide[schema.leftSide.length - 1].condensedFormula +
+                " -> ";
+        for (let i = 0; schema.rightSide.length - 1; i++)
+            reaction +=
+                schema.rightSide[i].mols +
+                    " " +
+                    schema.rightSide[i].condensedFormula +
+                    " + ";
+        reaction +=
+            schema.rightSide[schema.rightSide.length - 1].mols +
+                " " +
+                schema.rightSide[schema.rightSide.length - 1].condensedFormula;
+        return { reaction: reaction, name: name };
     }
     storageReaction() {
         if (!this.isBalanced())
@@ -315,12 +359,26 @@ export class ChemReaction {
     toString() {
         let str = "";
         for (let i = 0; i < this.leftSide.length - 1; i++)
-            str += this.leftSide[i].getCondesedFormula() + " + ";
+            str +=
+                this.leftSide[i].mols +
+                    " " +
+                    this.leftSide[i].getCondesedFormula() +
+                    " + ";
         str +=
-            this.leftSide[this.leftSide.length - 1].getCondesedFormula() + " -> ";
+            this.leftSide[this.leftSide.length - 1].mols +
+                " " +
+                this.leftSide[this.leftSide.length - 1].getCondesedFormula() +
+                " -> ";
         for (let i = 0; i < this.rightSide.length - 1; i++)
-            str += this.rightSide[i].getCondesedFormula() + " + ";
-        str += this.rightSide[this.rightSide.length - 1].getCondesedFormula();
+            str +=
+                this.rightSide[i].mols +
+                    " " +
+                    this.rightSide[i].getCondesedFormula() +
+                    " + ";
+        str +=
+            this.rightSide[this.rightSide.length - 1].mols +
+                " " +
+                this.rightSide[this.rightSide.length - 1].getCondesedFormula();
         return str;
     }
 }

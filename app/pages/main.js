@@ -24,11 +24,15 @@ function loadReactionCards() {
 	}
 
 	for (let i = 0; i < localStorage.length; i++) {
-		const reaction = ChemReaction.loadReactionPos(i);
+		const reactionSchema = ChemReaction.quickLoadFromPos(i);
+		if (!reactionSchema) return;
 
-		if (!reaction) return;
+		const reaction = ChemReaction.schemaToString(reactionSchema);
 
-		const $cloneReactionCard = $reactionCard.clone(true).removeClass("d-none");
+		const $cloneReactionCard = $reactionCard
+			.clone(true)
+			.removeClass("d-none")
+			.data("testes", "testes");
 
 		$cloneReactionCard.appendTo(".home-grid");
 
@@ -38,6 +42,21 @@ function loadReactionCards() {
 
 		$cloneReactionCard
 			.find("." + $.escapeSelector("reaction-description"))
-			.append(`${reaction.toString()}`);
+			.append(`${reaction.reaction}`);
+
+		$cloneReactionCard.on(
+			"click",
+			{ reactionId: reactionSchema.id },
+			redirectToAdicionar
+		);
 	}
+}
+/**
+ *
+ * @param {JQuery.ClickEvent<HTMLElement, {reactionId: number;}, HTMLElement, HTMLElement>} event
+ */
+function redirectToAdicionar(event) {
+	sessionStorage.setItem("reaction-id", event.data.reactionId.toString());
+
+	window.location.href = "./adicionar/index.html";
 }

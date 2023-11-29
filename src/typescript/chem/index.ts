@@ -336,11 +336,27 @@ class StringToMoleculeConversor {
 export class ChemReaction {
 	private leftSide: ChemMolecule[] = [];
 	private rightSide: ChemMolecule[] = [];
-	public name: string = "";
+	private name: string = "";
 	public id: number = 0;
+	public readonly MAX_NAME_CHAR = 36;
+	public readonly MIN_NAME_CHAR = 3;
 
 	public constructor(name: string) {
 		this.name = name;
+	}
+
+	public setName(name: string): boolean {
+		if (!this.isValidName(name)) return false;
+
+		this.name = name;
+
+		return true;
+	}
+
+	public isValidName(name: string): boolean {
+		return (
+			name.length >= this.MIN_NAME_CHAR || name.length <= this.MAX_NAME_CHAR
+		);
 	}
 
 	public setLeftSide(molecules: ChemMolecule[]): void {
@@ -387,10 +403,7 @@ export class ChemReaction {
 		return sum;
 	}
 
-	/**
-	 * get name ,id ,reagents and products as strings or numbers if id exits
-	 */
-	static loadReactionId(id: number): ChemReaction | undefined {
+	public static loadReactionId(id: number): ChemReaction | undefined {
 		const tryGetItem: ChemReactionSchema | undefined = JSON.parse(
 			localStorage.getItem(id.toString())
 		);
@@ -412,30 +425,69 @@ export class ChemReaction {
 		return reaction;
 	}
 
-	static loadReactionPos(index: number): ChemReaction | undefined {
+	public static loadReactionPos(index: number): ChemReaction | undefined {
 		if (index >= localStorage.length) return;
 
 		const tryGetItemID: string | undefined = localStorage.key(index);
 
 		if (!tryGetItemID) return;
 
-		const tryGetItem: ChemReactionSchema = JSON.parse(
-			localStorage.getItem(tryGetItemID)
-		);
+		return ChemReaction.loadReactionId(parseInt(tryGetItemID));
+	}
+	public static quickLoadFromPos(
+		index: number
+	): ChemReactionSchema | undefined {
+		if (index >= localStorage.length) return;
 
-		const reaction = new ChemReaction(tryGetItem.name);
+		const tryGetItemID: string | undefined = localStorage.key(index);
 
-		reaction.id = tryGetItem.id;
+		if (!tryGetItemID) return;
 
-		for (let i: number = 0; i < tryGetItem.leftSide.length; i++)
-			reaction.leftSide[i] = ChemMolecule.loadFromJSON(tryGetItem.leftSide[i]);
+		return ChemReaction.quickLoadFromId(parseInt(tryGetItemID));
+	}
 
-		for (let i: number = 0; i < tryGetItem.rightSide.length; i++)
-			reaction.rightSide[i] = ChemMolecule.loadFromJSON(
-				tryGetItem.rightSide[i]
-			);
+	public static quickLoadFromId(id: number): ChemReactionSchema | undefined {
+		const tryGetItem = localStorage.getItem(id.toString());
 
-		return reaction;
+		if (!tryGetItem) return;
+
+		const parseJson: ChemReactionSchema = JSON.parse(tryGetItem);
+
+		return parseJson;
+	}
+
+	public static schemaToString(schema: ChemReactionSchema): {
+		reaction: string;
+		name: string;
+	} {
+		let reaction: string = "",
+			name: string = schema.name;
+
+		for (let i: number = 0; i < schema.leftSide.length - 1; i++)
+			reaction +=
+				schema.leftSide[i].mols +
+				" " +
+				schema.leftSide[i].condensedFormula +
+				" + ";
+
+		reaction +=
+			schema.leftSide[schema.leftSide.length - 1].mols +
+			" " +
+			schema.leftSide[schema.leftSide.length - 1].condensedFormula +
+			" -> ";
+
+		for (let i: number = 0; schema.rightSide.length - 1; i++)
+			reaction +=
+				schema.rightSide[i].mols +
+				" " +
+				schema.rightSide[i].condensedFormula +
+				" + ";
+		reaction +=
+			schema.rightSide[schema.rightSide.length - 1].mols +
+			" " +
+			schema.rightSide[schema.rightSide.length - 1].condensedFormula;
+
+		return { reaction: reaction, name: name };
 	}
 
 	public storageReaction(): boolean {
@@ -479,15 +531,29 @@ export class ChemReaction {
 		let str: string = "";
 
 		for (let i: number = 0; i < this.leftSide.length - 1; i++)
-			str += this.leftSide[i].getCondesedFormula() + " + ";
+			str +=
+				this.leftSide[i].mols +
+				" " +
+				this.leftSide[i].getCondesedFormula() +
+				" + ";
 
 		str +=
-			this.leftSide[this.leftSide.length - 1].getCondesedFormula() + " -> ";
+			this.leftSide[this.leftSide.length - 1].mols +
+			" " +
+			this.leftSide[this.leftSide.length - 1].getCondesedFormula() +
+			" -> ";
 
 		for (let i: number = 0; i < this.rightSide.length - 1; i++)
-			str += this.rightSide[i].getCondesedFormula() + " + ";
+			str +=
+				this.rightSide[i].mols +
+				" " +
+				this.rightSide[i].getCondesedFormula() +
+				" + ";
 
-		str += this.rightSide[this.rightSide.length - 1].getCondesedFormula();
+		str +=
+			this.rightSide[this.rightSide.length - 1].mols +
+			" " +
+			this.rightSide[this.rightSide.length - 1].getCondesedFormula();
 
 		return str;
 	}

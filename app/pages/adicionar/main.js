@@ -15,7 +15,7 @@ addButton?.addEventListener("click", () => {
 	]);
 
 	if (typeof documentsById == "string") {
-		console.error(documentsById);
+		console.error(documentsById + " not found ");
 
 		return;
 	}

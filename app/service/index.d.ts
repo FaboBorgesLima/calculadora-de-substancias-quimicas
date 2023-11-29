@@ -30,9 +30,13 @@ export declare class ChemMolecule {
 export declare class ChemReaction {
     private leftSide;
     private rightSide;
-    name: string;
+    private name;
     id: number;
+    readonly MAX_NAME_CHAR = 36;
+    readonly MIN_NAME_CHAR = 3;
     constructor(name: string);
+    setName(name: string): boolean;
+    isValidName(name: string): boolean;
     setLeftSide(molecules: ChemMolecule[]): void;
     getLeftSide(): ChemMolecule[];
     setRightSide(molecules: ChemMolecule[]): void;
@@ -42,6 +46,12 @@ export declare class ChemReaction {
     private sumMolecules;
     static loadReactionId(id: number): ChemReaction | undefined;
     static loadReactionPos(index: number): ChemReaction | undefined;
+    static quickLoadFromPos(index: number): ChemReactionSchema | undefined;
+    static quickLoadFromId(id: number): ChemReactionSchema | undefined;
+    static schemaToString(schema: ChemReactionSchema): {
+        reaction: string;
+        name: string;
+    };
     storageReaction(): boolean;
     mult(num: number): ChemReaction;
     sumRightSide(): ChemMolecule;
