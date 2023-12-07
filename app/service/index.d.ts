@@ -33,9 +33,12 @@ export declare class ChemReaction {
     private name;
     id: number;
     readonly MAX_NAME_CHAR = 36;
+    static readonly MAX_NAME_CHAR = 36;
     readonly MIN_NAME_CHAR = 3;
+    static readonly MIN_NAME_CHAR = 3;
     constructor(name: string);
     setName(name: string): boolean;
+    getName(): string;
     isValidName(name: string): boolean;
     setLeftSide(molecules: ChemMolecule[]): void;
     getLeftSide(): ChemMolecule[];

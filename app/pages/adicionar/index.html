@@ -19,9 +19,121 @@
 			defer></script>
 		<script src="./main.js" type="module"></script>
 		<script src="../../service/index.js" defer type="module"></script>
+		<script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
 		<title>MotionMol</title>
 	</head>
 	<body>
+		<!--modal error-->
+		<div
+			class="modal fade"
+			id="modal-error"
+			data-bs-backdrop="static"
+			data-bs-keyboard="false"
+			tabindex="-1"
+			aria-labelledby="modal"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="modal-error-title"></h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-error-text">Erro</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-danger"
+							data-bs-dismiss="modal">
+							Fechar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end modal error -->
+		<!-- modal okay -->
+		<div
+			class="modal fade"
+			id="modal-okay"
+			data-bs-backdrop="static"
+			data-bs-keyboard="false"
+			tabindex="-1"
+			aria-labelledby="modal"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="modal-okay-title"></h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modal-okay-text"></div>
+					<div class="modal-footer">
+						<button
+							id="btn-success"
+							type="button"
+							class="btn btn-success"
+							data-bs-dismiss="modal">
+							Continuar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end modal okay-->
+		<!-- start main reagent card -->
+		<div class="row mb-4 g-0 justify-content-between reagent-card d-none">
+			<div class="input-group p-0 rounded shadow-sm col-8">
+				<input
+					class="form-control reagent"
+					placeholder="Reagente"
+					pattern="[A-Za-z0-9\(\)]{1,}" />
+				<button
+					class="btn bg-body shadow-none border-start-0 border-light-subtle reagent-remove-button"
+					type="button">
+					<span class="bi bi-x text-danger fs-2 lh-1"></span>
+				</button>
+			</div>
+			<div class="col-3">
+				<input
+					class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm reagent-quant"
+					type="number"
+					step="0.1"
+					pattern="[0-9]+([\.,][0-9]+)?"
+					placeholder="mols" />
+			</div>
+		</div>
+		<!-- end main reagent card -->
+		<!-- start main product card -->
+		<div class="row mb-4 g-0 justify-content-between product-card d-none">
+			<div class="input-group p-0 rounded shadow-sm col-8">
+				<input
+					class="form-control product"
+					placeholder="Produto"
+					pattern="[A-Za-z0-9\(\)]{1,}" />
+				<button
+					class="btn bg-body shadow-none border-start-0 border-light-subtle product-remove-button"
+					type="button">
+					<span class="bi bi-x text-danger fs-2 lh-1"></span>
+				</button>
+			</div>
+			<div class="col-3">
+				<input
+					class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm product-quant"
+					type="number"
+					step="0.1"
+					pattern="[0-9]+([\.,][0-9]+)?"
+					placeholder="mols" />
+			</div>
+		</div>
+		<!-- end main product card -->
 		<div class="d-flex flex-column justify-content-between vh-100">
 			<header class="container-fluid bg-primary p-3">
 				<div
@@ -33,7 +145,6 @@
 					<div class="d-sm-none"></div>
 				</div>
 			</header>
-			<span id="reaction-id" class="visually-hidden"></span>
 			<main class="p-4 bg-body">
 				<form class="container bg-secondary p-4 rounded-4 shadow-sm">
 					<!-- title -->
@@ -48,65 +159,47 @@
 						<!-- reagent -->
 
 						<div class="col-12 col-md-6">
-							<div class="row mb-4 g-0 justify-content-between">
-								<div class="input-group p-0 rounded shadow-sm col-8">
-									<input
-										class="form-control reagent"
-										placeholder="Reagente"
-										pattern="[A-Za-z0-9\(\)]{1,}" />
-									<button
-										class="btn bg-body shadow-none border-start-0 border-light-subtle">
-										<span class="bi bi-x text-dark fs-2 lh-1"></span>
-									</button>
-								</div>
-								<div class="col-3">
-									<input
-										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm reagent-quant"
-										type="number"
-										step="0.1"
-										pattern="[0-9]+([\.,][0-9]+)?"
-										placeholder="mols" />
-								</div>
-							</div>
-
-							<div class="row mb-4 g-0 justify-content-between">
-								<div class="input-group p-0 rounded shadow-sm col-8">
-									<input
-										class="form-control reagent"
-										placeholder="Reagente"
-										pattern="[A-Za-z0-9\(\)]{1,}" />
-									<button
-										class="btn bg-body shadow-none border-start-0 border-light-subtle">
-										<span class="bi bi-x text-danger fs-2 lh-1"></span>
-									</button>
-								</div>
-								<div class="col-3">
-									<input
-										class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm reagent-quant"
-										type="number"
-										step="0.1"
-										pattern="[0-9]+([\.,][0-9]+)?"
-										placeholder="mols" />
+							<div class="col-12" id="reagent-side">
+								<div class="row mb-4 g-0 justify-content-between">
+									<div class="input-group p-0 rounded shadow-sm col-8">
+										<input
+											class="form-control reagent"
+											placeholder="Reagente"
+											pattern="[A-Za-z0-9\(\)]{1,}" />
+										<button
+											class="btn bg-body shadow-none border-start-0 border-light-subtle">
+											<span class="bi bi-x text-dark fs-2 lh-1"></span>
+										</button>
+									</div>
+									<div class="col-3">
+										<input
+											class="btn h-100 remove-arrows fs-6 bg-body w-100 shadow-sm reagent-quant"
+											type="number"
+											step="0.1"
+											pattern="[0-9]+([\.,][0-9]+)?"
+											placeholder="mols" />
+									</div>
 								</div>
 							</div>
-
 							<button
-								class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none">
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none add-reagent"
+								type="button">
 								+ Reagente
 							</button>
 						</div>
 
 						<!-- products -->
 
-						<div class="col-12 col-md-6">
+						<div class="col-12 col-md-6" id="product-side">
 							<div class="row mb-4 g-0 justify-content-between">
 								<div class="input-group p-0 rounded shadow-sm col-8">
 									<input
 										class="form-control product"
-										placeholder="Product"
+										placeholder="Produto"
 										pattern="[A-Za-z0-9\(\)]{1,}" />
 									<button
-										class="btn bg-body shadow-none border-start-0 border-light-subtle">
+										class="btn bg-body shadow-none border-start-0 border-light-subtle"
+										type="button">
 										<span class="bi bi-x text-dark fs-2 lh-1"></span>
 									</button>
 								</div>
@@ -119,101 +212,38 @@
 										placeholder="mols" />
 								</div>
 							</div>
-
-							<button
-								class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none">
-								+ Produto
-							</button>
 						</div>
+					</div>
+					<div class="col-12 col-md-6">
+						<button
+							class="btn btn-primary text-white w-100 fw-bold mb-4 d-md-none add-product"
+							type="button">
+							+ Produto
+						</button>
 					</div>
 
 					<div class="row">
 						<!-- + reagent -->
 						<div class="col-12 col-md-6">
 							<button
-								class="btn btn-primary text-white w-100 fw-bold mb-4 d-none d-md-block">
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-none d-md-block add-reagent"
+								type="button">
 								+ Reagente
 							</button>
 						</div>
 						<!-- + product -->
 						<div class="col-12 col-md-6">
 							<button
-								class="btn btn-primary text-white w-100 fw-bold mb-4 d-none d-md-block">
+								class="btn btn-primary text-white w-100 fw-bold mb-4 d-none d-md-block add-product"
+								type="button">
 								+ Produto
 							</button>
 						</div>
 					</div>
 				</form>
-
-				<!--modal error-->
-				<div
-					class="modal fade"
-					id="modal-error"
-					data-bs-backdrop="static"
-					data-bs-keyboard="false"
-					tabindex="-1"
-					aria-labelledby="modal"
-					aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h1 class="modal-title fs-5">Um Erro Ocorreu!</h1>
-								<button
-									type="button"
-									class="btn-close"
-									data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<div class="modal-body" id="modal-error-text">Erro</div>
-							<div class="modal-footer">
-								<button
-									type="button"
-									class="btn btn-danger"
-									data-bs-dismiss="modal">
-									Fechar
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- end modal error -->
-				<!-- modal okay -->
-				<div
-					class="modal fade"
-					id="modal-okay"
-					data-bs-backdrop="static"
-					data-bs-keyboard="false"
-					tabindex="-1"
-					aria-labelledby="modal"
-					aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h1 class="modal-title fs-5">
-									Obrigado pela sua contribuição!
-								</h1>
-								<button
-									type="button"
-									class="btn-close"
-									data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<div class="modal-body" id="modal-okay-text"></div>
-							<div class="modal-footer">
-								<button
-									id="btn-success"
-									type="button"
-									class="btn btn-success"
-									data-bs-dismiss="modal">
-									Continuar
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- end modal okay-->
 			</main>
-			<footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
+			<footer
+				class="container-fluid bg-primary p-3 position-sticky bottom-0 z-3">
 				<div
 					class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
 					<a class="btn btn-secondary btn-lg" id="add">Registrar</a>

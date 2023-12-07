@@ -236,6 +236,9 @@ export class ChemReaction {
         this.name = name;
         return true;
     }
+    getName() {
+        return this.name;
+    }
     isValidName(name) {
         return (name.length >= this.MIN_NAME_CHAR || name.length <= this.MAX_NAME_CHAR);
     }
@@ -317,7 +320,7 @@ export class ChemReaction {
                 " " +
                 schema.leftSide[schema.leftSide.length - 1].condensedFormula +
                 " -> ";
-        for (let i = 0; schema.rightSide.length - 1; i++)
+        for (let i = 0; i < schema.rightSide.length - 1; i++)
             reaction +=
                 schema.rightSide[i].mols +
                     " " +
@@ -382,4 +385,6 @@ export class ChemReaction {
         return str;
     }
 }
+ChemReaction.MAX_NAME_CHAR = 36;
+ChemReaction.MIN_NAME_CHAR = 3;
 //# sourceMappingURL=index.js.map

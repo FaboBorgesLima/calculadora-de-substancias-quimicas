@@ -2,12 +2,13 @@
     "compilerOptions": {
       "target": "ES6",
       "sourceMap": true,
-      "outDir": "app/service",
+      "rootDir": "src/typescript",
+      "outDir": "app/",
       "removeComments": true,
       "preserveConstEnums": true,
       "allowUnreachableCode": false,
       "allowUnusedLabels": false,
       "declaration": true
     },
-    "files": ["src/typescript/chem/index.ts"]
+    "include": ["src/typescript"]
   }

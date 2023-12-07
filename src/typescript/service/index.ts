@@ -339,7 +339,9 @@ export class ChemReaction {
 	private name: string = "";
 	public id: number = 0;
 	public readonly MAX_NAME_CHAR = 36;
+	public static readonly MAX_NAME_CHAR = 36;
 	public readonly MIN_NAME_CHAR = 3;
+	public static readonly MIN_NAME_CHAR = 3;
 
 	public constructor(name: string) {
 		this.name = name;
@@ -351,6 +353,10 @@ export class ChemReaction {
 		this.name = name;
 
 		return true;
+	}
+
+	public getName(): string {
+		return this.name;
 	}
 
 	public isValidName(name: string): boolean {
@@ -476,7 +482,7 @@ export class ChemReaction {
 			schema.leftSide[schema.leftSide.length - 1].condensedFormula +
 			" -> ";
 
-		for (let i: number = 0; schema.rightSide.length - 1; i++)
+		for (let i: number = 0; i < schema.rightSide.length - 1; i++)
 			reaction +=
 				schema.rightSide[i].mols +
 				" " +
