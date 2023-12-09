@@ -337,6 +337,14 @@ if (tryIdLoadId) {
 	loadReagents(loadedReaction.getLeftSide());
 }
 
+function redirectToBalancear(): void {
+	window.location.href = "../balancear/index.html";
+}
+
+document
+	.getElementById("btn-success")
+	.addEventListener("click", redirectToBalancear);
+
 interface ModalError {
 	title: string;
 	msg: string;

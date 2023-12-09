@@ -4,7 +4,7 @@ Uma calculadora simples e pratica capaz de balancear reações quimicas e ajusta
 
 ## Endereço de Deploy - GitHub Pages
 
-[https://faboborgeslima.github.io/calculadora-de-substancias-quimicas/](https://faboborgeslima.github.io/calculadora-de-substancias-quimicas/)
+[https://faboborgeslima.github.io/calculadora-de-substancias-quimicas](https://faboborgeslima.github.io/calculadora-de-substancias-quimicas)
 
 ## Protótipo
 
@@ -18,7 +18,7 @@ Uma calculadora simples e pratica capaz de balancear reações quimicas e ajusta
 - [x] ID 02 - Utiliza técnicas avançadas de CSS, como Flexbox ou Grid Layout, para criar layouts responsivos e fluidos em diferentes resoluções de tela.
 - [x] ID 03 - Utiliza os componentes CSS e JavaScript oferecidos por um Framework CSS, como cards, modais ou carrosséis, aplicando estilos personalizados conforme o necessário.
 - [x] ID 04 - Implementa um layout fluido e responsivo utilizando unidades de viewport relativas (vw, vh) em vez de unidades fixas (px) para criar uma experiência de usuário consistente em diferentes dispositivos e tamanhos de tela.
-- [ ] ID 05 - Implementa animações em elementos da página, como hover, fadeIn/fadeOut, slideIn/slideOut, utilizando CSS Animations ou bibliotecas de animação, como o Animate.css, para fornecer feedback visual ao usuário e criar uma experiência interativa.
+- [x] ID 05 - Implementa animações em elementos da página, como hover, fadeIn/fadeOut, slideIn/slideOut, utilizando CSS Animations ou bibliotecas de animação, como o Animate.css, para fornecer feedback visual ao usuário e criar uma experiência interativa.
 - [x] ID 07 - Aplica um Design System consistente, definindo diretrizes de estilo, cores, tipografia e padrões de componentes que são seguidos em toda a aplicação, garantindo uma experiência de usuário uniforme e atraente.
 
 #### RA2 - Realizar tratamento de formulários e aplicar validações customizadas no lado cliente, utilizando a API do HTML e expressões regulares (REGEX).

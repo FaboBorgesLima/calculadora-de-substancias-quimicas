@@ -17,9 +17,25 @@
 		<script
 			defer
 			src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+		<script
+			defer
+			src="../../../node_modules/jquery/dist/jquery.min.js"></script>
+		<script src="../../service/index.js" type="module"></script>
+		<script src="main.js" type="module"></script>
 		<title>MotionMol</title>
 	</head>
 	<body>
+		<!-- molecule card start-->
+		<div class="row mb-4 d-none molecule-card">
+			<div class="col-8 col-md-10">
+				<span class="btn bg-body w-100 num-mols"></span>
+			</div>
+			<div class="col-4 col-md-2">
+				<span class="btn bg-body w-100 num-mols"></span>
+			</div>
+		</div>
+		<!-- molecule card end-->
 		<div class="d-flex flex-column justify-content-between vh-100 bg-body">
 			<header class="container-fluid bg-primary p-3">
 				<div
@@ -42,43 +58,39 @@
 								data-bs-toggle="dropdown"
 								aria-expanded="false">
 								<div></div>
-								Molécula
+								<span id="selected-molecule"></span>
 								<i class="bi bi-caret-down-fill text-warning"></i>
 							</button>
 							<ul
 								class="dropdown-menu w-100 text-center"
-								aria-labelledby="dropdownMenuButton1">
-								<li><a class="dropdown-item" href="#">Molécula 1</a></li>
-								<li><a class="dropdown-item" href="#">Molécula 2</a></li>
-								<li><a class="dropdown-item" href="#">Molécula 3</a></li>
+								aria-labelledby="dropdownMenuButton1"
+								id="molecules-list">
+								<li class="dropdown-item d-none"></li>
 							</ul>
 						</div>
 						<div class="col-12 col-sm-6 col-md-2">
-							<input class="btn bg-body w-100" type="number" />
+							<input
+								class="btn bg-body w-100"
+								type="number"
+								pattern="[0-9]+"
+								id="selected-molecule-unit" />
 						</div>
 					</div>
-					<div class="row mb-4">
-						<div class="col-8 col-md-10">
-							<span class="btn bg-body w-100">Molécula</span>
+					<div class="row">
+						<div class="col-12 col-lg-6">
+							<h3
+								class="text-center text-white text-bg-primary rounded p-1 shadow-sm mb-4">
+								Reagentes
+							</h3>
+							<div id="reagent-card-grid"></div>
 						</div>
-						<div class="col-4 col-md-2">
-							<span class="btn bg-body w-100">mols</span>
-						</div>
-					</div>
-					<div class="row mb-4">
-						<div class="col-8 col-md-10">
-							<span class="btn bg-body w-100">Molécula</span>
-						</div>
-						<div class="col-4 col-md-2">
-							<span class="btn bg-body w-100">mols</span>
-						</div>
-					</div>
-					<div class="row mb-4">
-						<div class="col-8 col-md-10">
-							<span class="btn bg-body w-100">Molécula</span>
-						</div>
-						<div class="col-4 col-md-2">
-							<span class="btn bg-body w-100">mols</span>
+
+						<div class="col-12 col-lg-6">
+							<h3
+								class="text-center text-white text-bg-primary rounded p-1 shadow-sm mb-4">
+								Produtos
+							</h3>
+							<div id="product-card-grid"></div>
 						</div>
 					</div>
 				</div>
@@ -86,7 +98,7 @@
 			<footer class="container-fluid bg-primary p-3 position-sticky bottom-0">
 				<div
 					class="container d-flex justify-content-end flex-column flex-sm-row gap-3">
-					<a class="btn btn-secondary btn-lg" href="#">Voltar</a>
+					<a class="btn btn-secondary btn-lg" href="../index.html">Voltar</a>
 				</div>
 			</footer>
 		</div>

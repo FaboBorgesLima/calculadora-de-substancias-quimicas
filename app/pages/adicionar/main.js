@@ -172,4 +172,10 @@ if (tryIdLoadId) {
     loadProducts(loadedReaction.getRightSide());
     loadReagents(loadedReaction.getLeftSide());
 }
+function redirectToBalancear() {
+    window.location.href = "../balancear/index.html";
+}
+document
+    .getElementById("btn-success")
+    .addEventListener("click", redirectToBalancear);
 //# sourceMappingURL=main.js.map
