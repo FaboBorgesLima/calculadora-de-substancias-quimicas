@@ -42,9 +42,15 @@ selectedMoleculeOnModalUnit.addEventListener("change", () => {
 
 	if (unit == "mass") {
 		numUnit = isNaN(numUnit) ? mainMass : numUnit;
+
+		numUnit = numUnit > 0 ? numUnit : mainMass;
+
 		multiplyCardsValuesBy(numUnit / mainMass);
 	} else {
 		numUnit = isNaN(numUnit) ? mainMols : numUnit;
+
+		numUnit = numUnit > 0 ? numUnit : mainMols;
+
 		multiplyCardsValuesBy(numUnit / mainMols);
 	}
 });
