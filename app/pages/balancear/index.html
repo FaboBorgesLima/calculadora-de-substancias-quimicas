@@ -28,10 +28,10 @@
 	<body>
 		<!-- molecule card start-->
 		<div class="row mb-4 d-none molecule-card">
-			<div class="col-8 col-md-10">
+			<div class="col-8 col-md-9">
 				<span class="btn bg-body w-100 num-mols"></span>
 			</div>
-			<div class="col-4 col-md-2">
+			<div class="col-4 col-md-3">
 				<span class="btn bg-body w-100 num-mols"></span>
 			</div>
 		</div>
@@ -47,10 +47,11 @@
 					<div class="d-sm-none"></div>
 				</div>
 			</header>
-			<main class="h-100 p-4">
+			<main class="h-100 p-4 bg-body">
 				<div class="container bg-secondary p-4 rounded-4 shadow-sm">
 					<div class="row mb-4">
-						<div class="dropdown col-12 col-sm-6 col-md-10 mb-4 mb-sm-0">
+						<div
+							class="dropdown col-12 col-sm-6 col-md-10 col-lg-4 mb-4 mb-sm-0">
 							<button
 								class="btn m-0 bg-body bg-body border-0 d-flex justify-content-between w-100"
 								type="button"
@@ -68,14 +69,45 @@
 								<li class="dropdown-item d-none"></li>
 							</ul>
 						</div>
-						<div class="col-12 col-sm-6 col-md-2">
+						<div class="col-12 col-sm-6 col-md-2 col-lg-2">
 							<input
 								class="btn bg-body w-100"
 								type="number"
 								pattern="[0-9]+"
 								id="selected-molecule-unit" />
 						</div>
+						<div class="col-12 col-lg-6">
+							<div class="row mt-4 mt-lg-0">
+								<div class="col-4">
+									<legend class="btn btn-primary text-white">Unidade:</legend>
+								</div>
+								<div class="col-4 mt-2">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="unit-radio"
+										id="mass-radio"
+										value="mass"
+										checked />
+									<label class="form-check-label" for="mass-radio">
+										Gramas
+									</label>
+								</div>
+								<div class="col-4 mt-2">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="unit-radio"
+										id="mols-radio"
+										value="mols" />
+									<label class="form-check-label" for="mols-radio">
+										Mols
+									</label>
+								</div>
+							</div>
+						</div>
 					</div>
+
 					<div class="row">
 						<div class="col-12 col-lg-6">
 							<h3
@@ -84,7 +116,6 @@
 							</h3>
 							<div id="reagent-card-grid"></div>
 						</div>
-
 						<div class="col-12 col-lg-6">
 							<h3
 								class="text-center text-white text-bg-primary rounded p-1 shadow-sm mb-4">

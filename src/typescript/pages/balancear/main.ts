@@ -11,18 +11,29 @@ const reaction: ChemReaction = ChemReaction.loadReactionId(
 	selectedMoleculeOnModal = document.getElementById("selected-molecule"),
 	selectedMoleculeOnModalUnit = <HTMLInputElement>(
 		document.getElementById("selected-molecule-unit")
+	),
+	radioUnitType = <NodeListOf<HTMLInputElement>>(
+		document.getElementsByName("unit-radio")
 	);
 
 let mainMass: number = 0,
 	mainMols: number = 0,
 	mainCondensedFormula: string = "",
 	cards: Card[] = [],
-	mainMolecule: ChemMolecule,
+	mainMolecule: ChemMolecule = new ChemMolecule(),
 	unit: "mols" | "mass" = "mass";
 
 console.info(reaction.getLeftSide()[0] == reaction.getLeftSide()[1]);
 
 setDropDownMoleculesFromReaction(reaction);
+
+for (let i: number = 0; i < radioUnitType.length; i++)
+	radioUnitType[i].addEventListener("click", () => {
+		if (radioUnitType[i].value == "mols") unit = "mols";
+		else unit = "mass";
+
+		setMoleculeToBalance(mainMolecule, unit);
+	});
 
 selectedMoleculeOnModalUnit.addEventListener("change", () => {
 	let numUnit = parseFloat(selectedMoleculeOnModalUnit.value);
@@ -58,7 +69,11 @@ function putMoleculeArrayOnDropDown(mols: ChemMolecule[]): void {
 	}
 }
 
-function setMoleculeToBalance(mol: ChemMolecule): void {
+function setMoleculeToBalance(
+	mol: ChemMolecule,
+	unitInternal?: "mass" | "mols"
+): void {
+	if (unitInternal) unit = unitInternal;
 	mainMolecule = mol;
 
 	selectedMoleculeOnModal.textContent = mol.getCondesedFormula();
@@ -79,7 +94,11 @@ function setMoleculeToBalance(mol: ChemMolecule): void {
 
 function multiplyCardsValuesBy(num: number): void {
 	for (let i: number = 0; i < cards.length; i++)
-		cards[i].num.textContent = (cards[i].initialMass * num).toFixed(2);
+		if (unit == "mass")
+			cards[i].num.textContent = (cards[i].initialMass * num).toFixed(2) + "g";
+		else
+			cards[i].num.textContent =
+				(cards[i].initialMols * num).toFixed(2) + "mol";
 }
 
 function loadAllMoleculesOnCardsExcept(mol: ChemMolecule): void {

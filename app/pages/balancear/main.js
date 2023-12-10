@@ -1,10 +1,18 @@
-import { ChemReaction } from "../../service/index.js";
+import { ChemMolecule, ChemReaction } from "../../service/index.js";
 if (!sessionStorage.getItem("reaction-id"))
     window.location.href = "../index.html";
-const reaction = ChemReaction.loadReactionId(+sessionStorage.getItem("reaction-id")), $listItemMain = $(".dropdown-item").clone().removeClass("d-none"), mainCard = document.getElementsByClassName("molecule-card")[0], selectedMoleculeOnModal = document.getElementById("selected-molecule"), selectedMoleculeOnModalUnit = (document.getElementById("selected-molecule-unit"));
-let mainMass = 0, mainMols = 0, mainCondensedFormula = "", cards = [], mainMolecule, unit = "mass";
+const reaction = ChemReaction.loadReactionId(+sessionStorage.getItem("reaction-id")), $listItemMain = $(".dropdown-item").clone().removeClass("d-none"), mainCard = document.getElementsByClassName("molecule-card")[0], selectedMoleculeOnModal = document.getElementById("selected-molecule"), selectedMoleculeOnModalUnit = (document.getElementById("selected-molecule-unit")), radioUnitType = (document.getElementsByName("unit-radio"));
+let mainMass = 0, mainMols = 0, mainCondensedFormula = "", cards = [], mainMolecule = new ChemMolecule(), unit = "mass";
 console.info(reaction.getLeftSide()[0] == reaction.getLeftSide()[1]);
 setDropDownMoleculesFromReaction(reaction);
+for (let i = 0; i < radioUnitType.length; i++)
+    radioUnitType[i].addEventListener("click", () => {
+        if (radioUnitType[i].value == "mols")
+            unit = "mols";
+        else
+            unit = "mass";
+        setMoleculeToBalance(mainMolecule, unit);
+    });
 selectedMoleculeOnModalUnit.addEventListener("change", () => {
     let numUnit = parseFloat(selectedMoleculeOnModalUnit.value);
     selectedMoleculeOnModalUnit.value = numUnit.toString();
@@ -30,7 +38,9 @@ function putMoleculeArrayOnDropDown(mols) {
         $listItem.on("click", () => setMoleculeToBalance(mol));
     }
 }
-function setMoleculeToBalance(mol) {
+function setMoleculeToBalance(mol, unitInternal) {
+    if (unitInternal)
+        unit = unitInternal;
     mainMolecule = mol;
     selectedMoleculeOnModal.textContent = mol.getCondesedFormula();
     const totalMass = mol.getTotalMass();
@@ -45,7 +55,11 @@ function setMoleculeToBalance(mol) {
 }
 function multiplyCardsValuesBy(num) {
     for (let i = 0; i < cards.length; i++)
-        cards[i].num.textContent = (cards[i].initialMass * num).toFixed(2);
+        if (unit == "mass")
+            cards[i].num.textContent = (cards[i].initialMass * num).toFixed(2) + "g";
+        else
+            cards[i].num.textContent =
+                (cards[i].initialMols * num).toFixed(2) + "mol";
 }
 function loadAllMoleculesOnCardsExcept(mol) {
     cards = createCardsOn("reagent-card-grid", reaction.getLeftSide(), mol);
