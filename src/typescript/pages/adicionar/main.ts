@@ -88,11 +88,20 @@ addButton.addEventListener("click", () => {
 
 	modalOkay.textElement.textContent = `A sua reação é :${reaction.toString()}`;
 
-	modalOkay.titleElement.textContent = "Obrigado pela sua contribuição!";
+	modalOkay.titleElement.innerHTML = "<p>Obrigado pela sua contribuição!</p>";
 
 	sessionStorage.clear();
 
 	sessionStorage.setItem("reaction-id", reaction.id.toString());
+
+	$.ajax({
+		url: "https://api.breakingbadquotes.xyz/v1/quotes",
+		context: document.body,
+	}).done((msg: [{ author: string; quote: string }]) => {
+		modalOkay.textElement.innerHTML += `<p class="font-italic">"${msg[0].quote}"</p>
+		<p class="font-italic">-${msg[0].author}</p>`;
+		console.log(msg[0]);
+	});
 
 	modalOkay.bootstrap.show();
 });

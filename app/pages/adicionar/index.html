@@ -91,7 +91,7 @@
 			<div class="input-group p-0 rounded shadow-sm col-8">
 				<input
 					class="form-control reagent"
-					placeholder="Reagente"
+					placeholder="Ex: H2O"
 					pattern="[A-Za-z0-9\(\)]{1,}" />
 				<button
 					class="btn bg-body shadow-none border-start-0 border-light-subtle reagent-remove-button"
@@ -114,7 +114,7 @@
 			<div class="input-group p-0 rounded shadow-sm col-8">
 				<input
 					class="form-control product"
-					placeholder="Produto"
+					placeholder="Ex: H2O"
 					pattern="[A-Za-z0-9\(\)]{1,}" />
 				<button
 					class="btn bg-body shadow-none border-start-0 border-light-subtle product-remove-button"
@@ -159,15 +159,22 @@
 						<div class="col-12 col-md-6">
 							<div class="col-12" id="reagent-side">
 								<div class="row mb-4 g-0 justify-content-between">
-									<div class="input-group p-0 rounded shadow-sm col-8">
-										<input
-											class="form-control reagent"
-											placeholder="Reagente"
-											pattern="[A-Za-z0-9\(\)]{1,}" />
-										<button
-											class="btn bg-body shadow-none border-start-0 border-light-subtle">
-											<span class="bi bi-x text-dark fs-2 lh-1"></span>
-										</button>
+									<div
+										class="col-12 rounded text-center text-primary mb-4 border-1 border border-primary">
+										<span class="fs-4">Reagentes</span>
+									</div>
+
+									<div class="col-8">
+										<div class="input-group p-0 rounded shadow-sm">
+											<input
+												class="form-control reagent"
+												placeholder="Ex: H2O"
+												pattern="[A-Za-z0-9\(\)]{1,}" />
+											<button
+												class="btn bg-body shadow-none border-start-0 border-light-subtle">
+												<span class="bi bi-x text-dark fs-2 lh-1"></span>
+											</button>
+										</div>
 									</div>
 									<div class="col-3">
 										<input
@@ -190,16 +197,23 @@
 
 						<div class="col-12 col-md-6" id="product-side">
 							<div class="row mb-4 g-0 justify-content-between">
-								<div class="input-group p-0 rounded shadow-sm col-8">
-									<input
-										class="form-control product"
-										placeholder="Produto"
-										pattern="[A-Za-z0-9\(\)]{1,}" />
-									<button
-										class="btn bg-body shadow-none border-start-0 border-light-subtle"
-										type="button">
-										<span class="bi bi-x text-dark fs-2 lh-1"></span>
-									</button>
+								<div
+									class="col-12 rounded text-center text-primary mb-4 border-1 border border-primary">
+									<span class="fs-4">Produtos</span>
+								</div>
+
+								<div class="col-8">
+									<div class="input-group p-0 rounded shadow-sm">
+										<input
+											class="form-control product"
+											placeholder="Ex: H2O"
+											pattern="[A-Za-z0-9\(\)]{1,}" />
+										<button
+											class="btn bg-body shadow-none border-start-0 border-light-subtle"
+											type="button">
+											<span class="bi bi-x text-dark fs-2 lh-1"></span>
+										</button>
+									</div>
 								</div>
 								<div class="col-3">
 									<input

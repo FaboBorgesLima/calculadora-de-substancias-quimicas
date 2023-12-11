@@ -13,15 +13,22 @@ for (let i = 0; i < radioUnitType.length; i++)
             unit = "mass";
         setMoleculeToBalance(mainMolecule, unit);
     });
-selectedMoleculeOnModalUnit.addEventListener("change", () => {
+selectedMoleculeOnModalUnit.addEventListener("input", () => {
+    selectedMoleculeOnModalUnit.value = selectedMoleculeOnModalUnit.value.replace(/[^0-9.,]/g, "");
+    selectedMoleculeOnModalUnit.value = selectedMoleculeOnModalUnit.value.replace(/[.,]/g, "x");
+    selectedMoleculeOnModalUnit.value = selectedMoleculeOnModalUnit.value.replace(/[x]/, ".");
+    selectedMoleculeOnModalUnit.value = selectedMoleculeOnModalUnit.value.replace(/[x]/g, "");
     let numUnit = parseFloat(selectedMoleculeOnModalUnit.value);
-    selectedMoleculeOnModalUnit.value = numUnit.toString();
+    selectedMoleculeOnModalUnit.value =
+        numUnit % 1 ? numUnit.toString() : selectedMoleculeOnModalUnit.value;
     if (unit == "mass") {
-        numUnit = isNaN(numUnit) ? mainMass : numUnit;
+        numUnit = isNaN(numUnit) ? 0 : numUnit;
+        numUnit = numUnit > 0 ? numUnit : 0;
         multiplyCardsValuesBy(numUnit / mainMass);
     }
     else {
-        numUnit = isNaN(numUnit) ? mainMols : numUnit;
+        numUnit = isNaN(numUnit) ? 0 : numUnit;
+        numUnit = numUnit > 0 ? numUnit : 0;
         multiplyCardsValuesBy(numUnit / mainMols);
     }
 });

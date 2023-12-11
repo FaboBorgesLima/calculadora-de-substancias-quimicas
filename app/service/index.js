@@ -20,35 +20,79 @@ export class ChemElement {
     static factory(element, quant) {
         switch (element) {
             case "H":
-                return new ChemElement(1, 1, quant);
+                return new ChemElement(1, 1.008, quant);
             case "Li":
-                return new ChemElement(3, 6.9, quant);
+                return new ChemElement(3, 6.941, quant);
             case "Na":
-                return new ChemElement(11, 23, quant);
+                return new ChemElement(11, 22.99, quant);
             case "K":
-                return new ChemElement(19, 39, quant);
+                return new ChemElement(19, 39.098, quant);
+            case "Rb":
+                return new ChemElement(37, 85.468, quant);
+            case "Cs":
+                return new ChemElement(55, 132.905, quant);
             case "Be":
-                return new ChemElement(4, 9, quant);
+                return new ChemElement(4, 9.012, quant);
             case "Mg":
-                return new ChemElement(12, 24, quant);
+                return new ChemElement(12, 24.305, quant);
             case "Ca":
-                return new ChemElement(20, 40, quant);
+                return new ChemElement(20, 40.078, quant);
+            case "Sr":
+                return new ChemElement(38, 87.62, quant);
+            case "Ba":
+                return new ChemElement(56, 137.327, quant);
+            case "Ti":
+                return new ChemElement(22, 47.867, quant);
+            case "Cr":
+                return new ChemElement(24, 51.996, quant);
+            case "Mn":
+                return new ChemElement(25, 54.938, quant);
+            case "Fe":
+                return new ChemElement(26, 55.845, quant);
+            case "Co":
+                return new ChemElement(27, 58.933, quant);
+            case "Ni":
+                return new ChemElement(28, 58.693, quant);
+            case "Cu":
+                return new ChemElement(29, 63.546, quant);
+            case "Zn":
+                return new ChemElement(30, 65.409, quant);
             case "B":
                 return new ChemElement(5, 10.8, quant);
             case "Al":
                 return new ChemElement(13, 26.98, quant);
+            case "Ga":
+                return new ChemElement(31, 69.723, quant);
+            case "In":
+                return new ChemElement(49, 114.818, quant);
+            case "Tl":
+                return new ChemElement(81, 204.383, quant);
             case "C":
                 return new ChemElement(6, 12, quant);
             case "Si":
                 return new ChemElement(14, 28.08, quant);
+            case "Ge":
+                return new ChemElement(32, 72.64, quant);
+            case "Sn":
+                return new ChemElement(50, 118.71, quant);
+            case "Pb":
+                return new ChemElement(82, 207.2, quant);
             case "N":
-                return new ChemElement(7, 14, quant);
+                return new ChemElement(7, 14.007, quant);
             case "P":
-                return new ChemElement(15, 30.9, quant);
+                return new ChemElement(15, 30.974, quant);
+            case "As":
+                return new ChemElement(33, 74.922, quant);
+            case "Sb":
+                return new ChemElement(51, 121.76, quant);
+            case "Bi":
+                return new ChemElement(83, 208.98, quant);
             case "O":
                 return new ChemElement(8, 16, quant);
             case "S":
                 return new ChemElement(16, 32, quant);
+            case "Se":
+                return new ChemElement(34, 78.96, quant);
             case "F":
                 return new ChemElement(9, 19, quant);
             case "Cl":
@@ -129,7 +173,7 @@ export class ChemMolecule {
         return this.condensedFormula;
     }
     setCondensedFormula(condensedFormula) {
-        const regex = /((Si)|(Li)|(Na)|(Be)|(Mg)|(Ca)|(Al)|(Cl)|(Br)|K|B|H|C|N|P|O|S|F|I)[0-9]*|\(|\)[0-9]*|\)/g;
+        const regex = /((Li)|(Na)|(Rb)|(Cs)|(Be)|(Mg)|(Ca)|(Sr)|(Ba)|(Ti)|(Cr)|(Mn)|(Fe)|(Co)|(Ni)|(Cu)|(Zn)|(Al)|(Ga)|(In)|(Tl)|(Si)|(Ge)|(Sn)|(Pb)|(As)|(Sb)|(Bi)|(Se)|(Cl)|(Br)|H|K|B|C|N|P|O|S|F|I)[0-9]*|\(|\)[0-9]*|\)/g;
         if (!regex.test(condensedFormula))
             return false;
         let elementsList = condensedFormula.match(regex);
