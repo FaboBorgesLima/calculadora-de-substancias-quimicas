@@ -176,6 +176,8 @@ export class ChemMolecule {
         const regex = /((Li)|(Na)|(Rb)|(Cs)|(Be)|(Mg)|(Ca)|(Sr)|(Ba)|(Ti)|(Cr)|(Mn)|(Fe)|(Co)|(Ni)|(Cu)|(Zn)|(Al)|(Ga)|(In)|(Tl)|(Si)|(Ge)|(Sn)|(Pb)|(As)|(Sb)|(Bi)|(Se)|(Cl)|(Br)|H|K|B|C|N|P|O|S|F|I)[0-9]*|\(|\)[0-9]*|\)/g;
         if (!regex.test(condensedFormula))
             return false;
+        if (condensedFormula.replace(regex, ""))
+            return false;
         let elementsList = condensedFormula.match(regex);
         if (!elementsList)
             return false;

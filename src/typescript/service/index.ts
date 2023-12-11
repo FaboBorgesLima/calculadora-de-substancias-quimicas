@@ -232,6 +232,8 @@ export class ChemMolecule {
 
 		if (!regex.test(condensedFormula)) return false;
 
+		if (condensedFormula.replace(regex, "")) return false;
+
 		let elementsList = condensedFormula.match(regex);
 
 		if (!elementsList) return false;
