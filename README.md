@@ -6,6 +6,10 @@ Uma calculadora simples e pratica capaz de balancear reações quimicas e ajusta
 
 [https://faboborgeslima.github.io/calculadora-de-substancias-quimicas/app/pages/](https://faboborgeslima.github.io/calculadora-de-substancias-quimicas/app/pages/)
 
+## Link Da Apresentação
+
+[https://youtu.be/6pK6Xn1KPyY](https://youtu.be/6pK6Xn1KPyY)
+
 ## Protótipo
 
 [https://www.figma.com/file/CMiFIumLW5FlHEdHEhIIwl/projeto_1_web_2?type=design&node-id=9-2&mode=design&t=XNYwMH4Ne4YuhjzT-0](https://www.figma.com/file/CMiFIumLW5FlHEdHEhIIwl/projeto_1_web_2?type=design&node-id=9-2&mode=design&t=XNYwMH4Ne4YuhjzT-0)
